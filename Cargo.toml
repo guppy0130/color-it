@@ -1,0 +1,20 @@
+[package]
+name = "color-it"
+version = "0.1.0"
+edition = "2021"
+authors = ["Nick Yang <guppy0130@users.noreply.github.com>"]
+description = "Color and format timestamped JSON logs"
+readme = "README.md"
+publish = false
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+chrono = { version = "0.4.34", features = ["serde"] }
+clap = { version = "4.5.0", features = ["derive"] }
+env_logger = "0.11.1"
+humantime = "2.1.0"
+log = { version = "0.4.20", features = ["serde", "kv_unstable"] }
+owo-colors = { version = "4.0.0", features = ["supports-colors"] }
+serde = "1.0.196"
+serde_json = "1.0.113"

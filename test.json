@@ -1,0 +1,5 @@
+{"timestamp": "2024-02-11T20:10:00-06:00", "message": "Hello world", "level": "TRACE"}
+{"timestamp": "2024-02-11T20:10:00-06:00", "message": "Hello world", "level": "DEBUG"}
+{"timestamp": "2024-02-11T20:10:00-06:00", "message": "Hello world", "level": "INFO"}
+{"timestamp": "2024-02-11T20:10:00-06:00", "message": "Hello world", "level": "WARN"}
+{"timestamp": "2024-02-11T20:10:00-06:00", "message": "Hello world", "level": "ERROR"}
