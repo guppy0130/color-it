@@ -1,4 +1,4 @@
-use chrono::{DateTime, FixedOffset};
+use chrono::{DateTime, FixedOffset, Local};
 use clap::{ArgAction::Count, Parser};
 use log::{logger, Level, RecordBuilder};
 use owo_colors::{OwoColorize, Stream::Stdout, Style};
@@ -51,7 +51,8 @@ fn main() -> Result<(), Box<dyn Error>> {
             writeln!(
                 buf,
                 "{} {: <6} - {}",
-                dt.to_rfc3339().if_supports_color(Stdout, |text| {
+                // always cast to local tz?
+                dt.with_timezone(&Local).to_rfc3339().if_supports_color(Stdout, |text| {
                     if config.color_amount >= 2 {
                         text.style(style)
                     } else {
