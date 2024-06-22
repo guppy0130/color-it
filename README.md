@@ -27,6 +27,7 @@ RUST_LOG=trace color-it --level severity --message msg --timestamp time --strpti
 
 ## more notes
 
+* if `timestamp` is an int, it'll be wrapped into a string, so you still have to pass `strptime` (see #1)
 * args to `strptime`: <https://docs.rs/chrono/latest/chrono/format/strftime/index.html>
 * how `level` is `Deserialize`'d: <https://github.com/rust-lang/log/blob/7cb6a01dff9157f3f3dca36aa0152f144023ff60/src/serde.rs#L31>
   * pass an int ([supposedly](https://github.com/rust-lang/log/blob/7cb6a01dff9157f3f3dca36aa0152f144023ff60/src/serde.rs#L45), haven't figured this out yet)
