@@ -13,7 +13,6 @@ publish = false
 chrono = { version = "0.4.34", features = ["serde"] }
 clap = { version = "4.5.0", features = ["derive"] }
 env_logger = "0.11.1"
-humantime = "2.1.0"
 log = { version = "0.4.20", features = ["serde", "kv_unstable"] }
 owo-colors = { version = "4.0.0", features = ["supports-colors"] }
 serde = "1.0.196"

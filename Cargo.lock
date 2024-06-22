@@ -163,7 +163,6 @@ dependencies = [
  "chrono",
  "clap",
  "env_logger",
- "humantime",
  "log",
  "owo-colors",
  "serde",
