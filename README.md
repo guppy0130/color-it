@@ -3,7 +3,7 @@
 humans were never meant to parse json with their eyeballs. have some color.
 
 ```sh
-cat test.json | RUST_LOG=trace cargo run
+cat test.jsonl | RUST_LOG=trace cargo run
 ```
 
 ## options
