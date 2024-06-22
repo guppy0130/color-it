@@ -1,5 +1,5 @@
 use chrono::{DateTime, FixedOffset};
-use clap::{Parser, ArgAction::Count};
+use clap::{ArgAction::Count, Parser};
 use log::{logger, Level, RecordBuilder};
 use owo_colors::{OwoColorize, Stream::Stdout, Style};
 use std::{
@@ -25,7 +25,7 @@ struct Config {
     strptime: String,
     /// how much color to use (0..2, 0 is just level)
     #[arg(short, long, action=Count)]
-    color_amount: u8
+    color_amount: u8,
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -61,15 +61,13 @@ fn main() -> Result<(), Box<dyn Error>> {
                 record
                     .level()
                     .if_supports_color(Stdout, |text| text.style(style)),
-                record
-                    .args()
-                    .if_supports_color(Stdout, |text| {
-                        if config.color_amount >= 1 {
-                            text.style(style)
-                        } else {
-                            text.style(Style::new())
-                        }
-                    })
+                record.args().if_supports_color(Stdout, |text| {
+                    if config.color_amount >= 1 {
+                        text.style(style)
+                    } else {
+                        text.style(Style::new())
+                    }
+                })
             )
         })
         .init();
@@ -87,15 +85,16 @@ fn main() -> Result<(), Box<dyn Error>> {
         let mut v: serde_json::Value = serde_json::from_str(&buffer)?;
         // ok, we just hope that you're outputting to a way upstream has decided to deserialize.
         let level: Level = serde_json::from_value(v[config.level.clone()].take())?;
-        // wow, I hope we can deserialize that timestamp without having to support other formats!
-        let ts_str: &str = v[config.timestamp.clone()]
-            .as_str()
-            .unwrap_or("1970-01-01 00:00:00");
+        let ts_str: String = match &v[config.timestamp.clone()] {
+            serde_json::Value::Number(v) => v.as_f64().unwrap().to_string(),
+            serde_json::Value::String(v) => v.into(),
+            _ => panic!(),
+        };
         // this is suspicious; if it doesn't deserialize to utf8 then uh...
         let m = v[config.message.clone()].as_str().unwrap_or_default();
 
         let mut kvs: BTreeMap<&str, &str> = BTreeMap::new();
-        kvs.insert("timestamp", ts_str);
+        kvs.insert("timestamp", ts_str.as_str());
         kvs.insert("strptime", &config.strptime);
         let mut record = RecordBuilder::new();
         l.log(
